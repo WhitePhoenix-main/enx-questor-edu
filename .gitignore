@@ -1,0 +1,101 @@
+### ОС / редакторы
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# JetBrains Rider / ReSharper
+.idea/
+*.sln.iml
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# VS / VS Code
+.vs/
+.vscode/
+
+### .NET / сборка
+[Bb]in/
+[Oo]bj/
+out/
+artifacts/
+TestResults/
+*.user
+*.suo
+*.cache
+*.ilk
+*.pdb
+*.opendb
+*.tlog
+
+# Профили публикации (могут содержать секреты)
+**/Properties/PublishProfiles/*.pubxml
+**/Properties/PublishProfiles/*.pubxml.user
+*.publishsettings
+
+# Логи / покрытия
+*.log
+logs/
+coverage/
+coverage*.json
+coverage*.xml
+coverage*.info
+*.dcvr
+*.dcvr.zip
+
+# Конфиги с секретами
+appsettings.*.Development.json
+appsettings.*.Local.json
+appsettings.*.Secrets.json
+*.secret.json
+.env
+.env.*.local
+
+# БД/дампы (если используешь SQLite/LocalDB)
+*.db
+*.sqlite
+*.sqlite3
+*.mdf
+*.ldf
+*.bak
+*.bak2
+
+### EF Core
+# МИГРАЦИИ НЕ ИГНОРИРУЕМ!
+# (папку Migrations оставляем в репозитории)
+
+### Frontend (если в Web есть сборка на Node)
+node_modules/
+dist/
+build/
+.npmrc
+.pnpm-store/
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.yarnrc.yml
+.yarn-integrity
+.npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.eslintcache
+.tsbuildinfo
+.parcel-cache/
+.turbo/
+.vite/
+.next/
+.nuxt/
+
+# LibMan (если используешь)
+wwwroot/lib/
+
+# Разное
+publish/
+Publish/
+*.nupkg
+*.snupkg
