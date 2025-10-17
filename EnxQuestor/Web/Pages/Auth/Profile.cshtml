@@ -1,0 +1,9 @@
+
+@page
+@model ProfileModel
+<h1 class="text-xl font-bold mb-4">Профиль</h1>
+<p>Telegram: @(Model.TelegramId is null ? "не привязан" : Model.TelegramId)</p>
+<form method="post">
+  <button class="btn" formaction="?handler=Generate">Сгенерировать код привязки</button>
+</form>
+@if (Model.OneTimeCode is string c) { <p class="mt-2">Отправьте боту этот код: <b>@c</b></p> }

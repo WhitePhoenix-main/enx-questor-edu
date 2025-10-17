@@ -1,0 +1,275 @@
+2025-10-18 00:55:09.439 +08:00 [WRN] The foreign key property 'AttemptStep.AttemptId1' was created in shadow state because a conflicting property with the simple name 'AttemptId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-10-18 00:55:09.642 +08:00 [WRN] The foreign key property 'ScenarioStep.ScenarioId1' was created in shadow state because a conflicting property with the simple name 'ScenarioId' exists in the entity type, but is either not mapped, is already used for another relationship, or is incompatible with the associated primary key type. See https://aka.ms/efcore-relationships for information on mapping relationships in EF Core.
+2025-10-18 00:55:10.462 +08:00 [INF] Executed DbCommand (44ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-18 00:55:11.209 +08:00 [INF] Executed DbCommand (29ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+    "MigrationId" character varying(150) NOT NULL,
+    "ProductVersion" character varying(32) NOT NULL,
+    CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+);
+2025-10-18 00:55:11.296 +08:00 [INF] Executed DbCommand (5ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2025-10-18 00:55:11.331 +08:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT "MigrationId", "ProductVersion"
+FROM "__EFMigrationsHistory"
+ORDER BY "MigrationId";
+2025-10-18 00:55:11.352 +08:00 [INF] No migrations were applied. The database is already up to date.
+2025-10-18 00:55:11.431 +08:00 [INF] User profile is available. Using 'C:\Users\enixm\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2025-10-18 00:55:11.961 +08:00 [INF] Executed DbCommand (20ms) [Parameters=[@__normalizedName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedName_0
+LIMIT 1
+2025-10-18 00:55:11.991 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedName_0
+LIMIT 1
+2025-10-18 00:55:12.284 +08:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO public."AspNetRoles" ("Id", "ConcurrencyStamp", "Name", "NormalizedName")
+VALUES (@p0, @p1, @p2, @p3);
+2025-10-18 00:55:12.319 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedName_0
+LIMIT 1
+2025-10-18 00:55:12.330 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedName_0
+LIMIT 1
+2025-10-18 00:55:12.343 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO public."AspNetRoles" ("Id", "ConcurrencyStamp", "Name", "NormalizedName")
+VALUES (@p0, @p1, @p2, @p3);
+2025-10-18 00:55:12.355 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedName_0
+LIMIT 1
+2025-10-18 00:55:12.367 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedName_0
+LIMIT 1
+2025-10-18 00:55:12.376 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?', @p1='?', @p2='?', @p3='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO public."AspNetRoles" ("Id", "ConcurrencyStamp", "Name", "NormalizedName")
+VALUES (@p0, @p1, @p2, @p3);
+2025-10-18 00:55:12.408 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedEmail_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DisplayName", a."Email", a."EmailConfirmed", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TelegramId", a."TelegramUsername", a."TwoFactorEnabled", a."UserName"
+FROM public."AspNetUsers" AS a
+WHERE a."NormalizedEmail" = @__normalizedEmail_0
+LIMIT 2
+2025-10-18 00:55:12.617 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DisplayName", a."Email", a."EmailConfirmed", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TelegramId", a."TelegramUsername", a."TwoFactorEnabled", a."UserName"
+FROM public."AspNetUsers" AS a
+WHERE a."NormalizedUserName" = @__normalizedUserName_0
+LIMIT 1
+2025-10-18 00:55:12.853 +08:00 [INF] Executed DbCommand (48ms) [Parameters=[@p0='?', @p1='?' (DbType = Int32), @p2='?', @p3='?' (DbType = DateTime), @p4='?', @p5='?', @p6='?' (DbType = Boolean), @p7='?' (DbType = Boolean), @p8='?' (DbType = DateTime), @p9='?', @p10='?', @p11='?', @p12='?', @p13='?' (DbType = Boolean), @p14='?', @p15='?', @p16='?', @p17='?' (DbType = Boolean), @p18='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO public."AspNetUsers" ("Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "DisplayName", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TelegramId", "TelegramUsername", "TwoFactorEnabled", "UserName")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18);
+2025-10-18 00:55:12.903 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedRoleName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedRoleName_0
+LIMIT 2
+2025-10-18 00:55:12.990 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?', @__p_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."UserId", a."RoleId"
+FROM public."AspNetUserRoles" AS a
+WHERE a."UserId" = @__p_0 AND a."RoleId" = @__p_1
+LIMIT 1
+2025-10-18 00:55:13.005 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedRoleName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedRoleName_0
+LIMIT 2
+2025-10-18 00:55:13.017 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?', @__p_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."UserId", a."RoleId"
+FROM public."AspNetUserRoles" AS a
+WHERE a."UserId" = @__p_0 AND a."RoleId" = @__p_1
+LIMIT 1
+2025-10-18 00:55:13.034 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedRoleName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedRoleName_0
+LIMIT 2
+2025-10-18 00:55:13.067 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DisplayName", a."Email", a."EmailConfirmed", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TelegramId", a."TelegramUsername", a."TwoFactorEnabled", a."UserName"
+FROM public."AspNetUsers" AS a
+WHERE a."NormalizedUserName" = @__normalizedUserName_0
+LIMIT 1
+2025-10-18 00:55:13.114 +08:00 [INF] Executed DbCommand (6ms) [Parameters=[@p0='?', @p1='?', @p20='?', @p2='?' (DbType = Int32), @p3='?', @p21='?', @p4='?' (DbType = DateTime), @p5='?', @p6='?', @p7='?' (DbType = Boolean), @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?', @p11='?', @p12='?', @p13='?', @p14='?' (DbType = Boolean), @p15='?', @p16='?', @p17='?', @p18='?' (DbType = Boolean), @p19='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO public."AspNetUserRoles" ("RoleId", "UserId")
+VALUES (@p0, @p1);
+UPDATE public."AspNetUsers" SET "AccessFailedCount" = @p2, "ConcurrencyStamp" = @p3, "CreatedAt" = @p4, "DisplayName" = @p5, "Email" = @p6, "EmailConfirmed" = @p7, "LockoutEnabled" = @p8, "LockoutEnd" = @p9, "NormalizedEmail" = @p10, "NormalizedUserName" = @p11, "PasswordHash" = @p12, "PhoneNumber" = @p13, "PhoneNumberConfirmed" = @p14, "SecurityStamp" = @p15, "TelegramId" = @p16, "TelegramUsername" = @p17, "TwoFactorEnabled" = @p18, "UserName" = @p19
+WHERE "Id" = @p20 AND "ConcurrencyStamp" = @p21;
+2025-10-18 00:55:13.152 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DisplayName", a."Email", a."EmailConfirmed", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TelegramId", a."TelegramUsername", a."TwoFactorEnabled", a."UserName"
+FROM public."AspNetUsers" AS a
+WHERE a."NormalizedEmail" = @__normalizedEmail_0
+LIMIT 2
+2025-10-18 00:55:13.289 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DisplayName", a."Email", a."EmailConfirmed", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TelegramId", a."TelegramUsername", a."TwoFactorEnabled", a."UserName"
+FROM public."AspNetUsers" AS a
+WHERE a."NormalizedUserName" = @__normalizedUserName_0
+LIMIT 1
+2025-10-18 00:55:13.305 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?', @p1='?' (DbType = Int32), @p2='?', @p3='?' (DbType = DateTime), @p4='?', @p5='?', @p6='?' (DbType = Boolean), @p7='?' (DbType = Boolean), @p8='?' (DbType = DateTime), @p9='?', @p10='?', @p11='?', @p12='?', @p13='?' (DbType = Boolean), @p14='?', @p15='?', @p16='?', @p17='?' (DbType = Boolean), @p18='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO public."AspNetUsers" ("Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "DisplayName", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TelegramId", "TelegramUsername", "TwoFactorEnabled", "UserName")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18);
+2025-10-18 00:55:13.318 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedRoleName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedRoleName_0
+LIMIT 2
+2025-10-18 00:55:13.335 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?', @__p_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."UserId", a."RoleId"
+FROM public."AspNetUserRoles" AS a
+WHERE a."UserId" = @__p_0 AND a."RoleId" = @__p_1
+LIMIT 1
+2025-10-18 00:55:13.352 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedRoleName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedRoleName_0
+LIMIT 2
+2025-10-18 00:55:13.364 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?', @__p_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."UserId", a."RoleId"
+FROM public."AspNetUserRoles" AS a
+WHERE a."UserId" = @__p_0 AND a."RoleId" = @__p_1
+LIMIT 1
+2025-10-18 00:55:13.375 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedRoleName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedRoleName_0
+LIMIT 2
+2025-10-18 00:55:13.388 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedUserName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DisplayName", a."Email", a."EmailConfirmed", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TelegramId", a."TelegramUsername", a."TwoFactorEnabled", a."UserName"
+FROM public."AspNetUsers" AS a
+WHERE a."NormalizedUserName" = @__normalizedUserName_0
+LIMIT 1
+2025-10-18 00:55:13.400 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='?', @p1='?', @p20='?', @p2='?' (DbType = Int32), @p3='?', @p21='?', @p4='?' (DbType = DateTime), @p5='?', @p6='?', @p7='?' (DbType = Boolean), @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?', @p11='?', @p12='?', @p13='?', @p14='?' (DbType = Boolean), @p15='?', @p16='?', @p17='?', @p18='?' (DbType = Boolean), @p19='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO public."AspNetUserRoles" ("RoleId", "UserId")
+VALUES (@p0, @p1);
+UPDATE public."AspNetUsers" SET "AccessFailedCount" = @p2, "ConcurrencyStamp" = @p3, "CreatedAt" = @p4, "DisplayName" = @p5, "Email" = @p6, "EmailConfirmed" = @p7, "LockoutEnabled" = @p8, "LockoutEnd" = @p9, "NormalizedEmail" = @p10, "NormalizedUserName" = @p11, "PasswordHash" = @p12, "PhoneNumber" = @p13, "PhoneNumberConfirmed" = @p14, "SecurityStamp" = @p15, "TelegramId" = @p16, "TelegramUsername" = @p17, "TwoFactorEnabled" = @p18, "UserName" = @p19
+WHERE "Id" = @p20 AND "ConcurrencyStamp" = @p21;
+2025-10-18 00:55:13.412 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedEmail_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DisplayName", a."Email", a."EmailConfirmed", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TelegramId", a."TelegramUsername", a."TwoFactorEnabled", a."UserName"
+FROM public."AspNetUsers" AS a
+WHERE a."NormalizedEmail" = @__normalizedEmail_0
+LIMIT 2
+2025-10-18 00:55:13.557 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedUserName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DisplayName", a."Email", a."EmailConfirmed", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TelegramId", a."TelegramUsername", a."TwoFactorEnabled", a."UserName"
+FROM public."AspNetUsers" AS a
+WHERE a."NormalizedUserName" = @__normalizedUserName_0
+LIMIT 1
+2025-10-18 00:55:13.604 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='?', @p1='?' (DbType = Int32), @p2='?', @p3='?' (DbType = DateTime), @p4='?', @p5='?', @p6='?' (DbType = Boolean), @p7='?' (DbType = Boolean), @p8='?' (DbType = DateTime), @p9='?', @p10='?', @p11='?', @p12='?', @p13='?' (DbType = Boolean), @p14='?', @p15='?', @p16='?', @p17='?' (DbType = Boolean), @p18='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO public."AspNetUsers" ("Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "DisplayName", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TelegramId", "TelegramUsername", "TwoFactorEnabled", "UserName")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10, @p11, @p12, @p13, @p14, @p15, @p16, @p17, @p18);
+2025-10-18 00:55:13.626 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedRoleName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedRoleName_0
+LIMIT 2
+2025-10-18 00:55:13.663 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?', @__p_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."UserId", a."RoleId"
+FROM public."AspNetUserRoles" AS a
+WHERE a."UserId" = @__p_0 AND a."RoleId" = @__p_1
+LIMIT 1
+2025-10-18 00:55:13.680 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__normalizedRoleName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedRoleName_0
+LIMIT 2
+2025-10-18 00:55:13.720 +08:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?', @__p_1='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."UserId", a."RoleId"
+FROM public."AspNetUserRoles" AS a
+WHERE a."UserId" = @__p_0 AND a."RoleId" = @__p_1
+LIMIT 1
+2025-10-18 00:55:13.759 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[@__normalizedRoleName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."ConcurrencyStamp", a."Name", a."NormalizedName"
+FROM public."AspNetRoles" AS a
+WHERE a."NormalizedName" = @__normalizedRoleName_0
+LIMIT 2
+2025-10-18 00:55:13.794 +08:00 [INF] Executed DbCommand (3ms) [Parameters=[@__normalizedUserName_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT a."Id", a."AccessFailedCount", a."ConcurrencyStamp", a."CreatedAt", a."DisplayName", a."Email", a."EmailConfirmed", a."LockoutEnabled", a."LockoutEnd", a."NormalizedEmail", a."NormalizedUserName", a."PasswordHash", a."PhoneNumber", a."PhoneNumberConfirmed", a."SecurityStamp", a."TelegramId", a."TelegramUsername", a."TwoFactorEnabled", a."UserName"
+FROM public."AspNetUsers" AS a
+WHERE a."NormalizedUserName" = @__normalizedUserName_0
+LIMIT 1
+2025-10-18 00:55:13.849 +08:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='?', @p1='?', @p20='?', @p2='?' (DbType = Int32), @p3='?', @p21='?', @p4='?' (DbType = DateTime), @p5='?', @p6='?', @p7='?' (DbType = Boolean), @p8='?' (DbType = Boolean), @p9='?' (DbType = DateTime), @p10='?', @p11='?', @p12='?', @p13='?', @p14='?' (DbType = Boolean), @p15='?', @p16='?', @p17='?', @p18='?' (DbType = Boolean), @p19='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO public."AspNetUserRoles" ("RoleId", "UserId")
+VALUES (@p0, @p1);
+UPDATE public."AspNetUsers" SET "AccessFailedCount" = @p2, "ConcurrencyStamp" = @p3, "CreatedAt" = @p4, "DisplayName" = @p5, "Email" = @p6, "EmailConfirmed" = @p7, "LockoutEnabled" = @p8, "LockoutEnd" = @p9, "NormalizedEmail" = @p10, "NormalizedUserName" = @p11, "PasswordHash" = @p12, "PhoneNumber" = @p13, "PhoneNumberConfirmed" = @p14, "SecurityStamp" = @p15, "TelegramId" = @p16, "TelegramUsername" = @p17, "TwoFactorEnabled" = @p18, "UserName" = @p19
+WHERE "Id" = @p20 AND "ConcurrencyStamp" = @p21;
+2025-10-18 00:55:13.933 +08:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM public."Scenarios" AS s)
+2025-10-18 00:55:14.326 +08:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM public."Achievements" AS a)
+2025-10-18 00:55:14.433 +08:00 [INF] Executed DbCommand (9ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?', @p2='?', @p3='?', @p4='?', @p5='?', @p6='?' (DbType = Guid), @p7='?', @p8='?', @p9='?', @p10='?', @p11='?', @p12='?' (DbType = Guid), @p13='?', @p14='?', @p15='?', @p16='?', @p17='?', @p18='?' (DbType = Guid), @p19='?', @p20='?' (DbType = DateTime), @p21='?', @p22='?' (DbType = Int32), @p23='?' (DbType = Boolean), @p24='?', @p25='?', @p26='?', @p27='?' (DbType = DateTime), @p28='?' (DbType = Guid), @p29='?', @p30='?' (DbType = DateTime), @p31='?', @p32='?' (DbType = Int32), @p33='?' (DbType = Boolean), @p34='?', @p35='?', @p36='?', @p37='?' (DbType = DateTime), @p38='?' (DbType = Guid), @p39='?', @p40='?' (DbType = Int32), @p41='?' (DbType = Int32), @p42='?' (DbType = Guid), @p43='?' (DbType = Guid), @p44='?' (DbType = Int32), @p45='?', @p46='?' (DbType = Guid), @p47='?', @p48='?' (DbType = Int32), @p49='?' (DbType = Int32), @p50='?' (DbType = Guid), @p51='?' (DbType = Guid), @p52='?' (DbType = Int32), @p53='?', @p54='?' (DbType = Guid), @p55='?', @p56='?' (DbType = Int32), @p57='?' (DbType = Int32), @p58='?' (DbType = Guid), @p59='?' (DbType = Guid), @p60='?' (DbType = Int32), @p61='?', @p62='?' (DbType = Guid), @p63='?', @p64='?' (DbType = Int32), @p65='?' (DbType = Int32), @p66='?' (DbType = Guid), @p67='?' (DbType = Guid), @p68='?' (DbType = Int32), @p69='?', @p70='?' (DbType = Guid), @p71='?', @p72='?' (DbType = Int32), @p73='?' (DbType = Int32), @p74='?' (DbType = Guid), @p75='?' (DbType = Guid), @p76='?' (DbType = Int32), @p77='?', @p78='?' (DbType = Guid), @p79='?', @p80='?' (DbType = Int32), @p81='?' (DbType = Int32), @p82='?' (DbType = Guid), @p83='?' (DbType = Guid), @p84='?' (DbType = Int32), @p85='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO public."Achievements" ("Id", "Code", "Description", "IconUrl", "RuleJson", "Title")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5);
+INSERT INTO public."Achievements" ("Id", "Code", "Description", "IconUrl", "RuleJson", "Title")
+VALUES (@p6, @p7, @p8, @p9, @p10, @p11);
+INSERT INTO public."Achievements" ("Id", "Code", "Description", "IconUrl", "RuleJson", "Title")
+VALUES (@p12, @p13, @p14, @p15, @p16, @p17);
+INSERT INTO public."Scenarios" ("Id", "AuthorId", "CreatedAt", "Description", "Difficulty", "IsPublished", "Slug", "Tags", "Title", "UpdatedAt")
+VALUES (@p18, @p19, @p20, @p21, @p22, @p23, @p24, @p25, @p26, @p27);
+INSERT INTO public."Scenarios" ("Id", "AuthorId", "CreatedAt", "Description", "Difficulty", "IsPublished", "Slug", "Tags", "Title", "UpdatedAt")
+VALUES (@p28, @p29, @p30, @p31, @p32, @p33, @p34, @p35, @p36, @p37);
+INSERT INTO public."ScenarioSteps" ("Id", "Content", "MaxScore", "Order", "ScenarioId", "ScenarioId1", "StepType", "Title")
+VALUES (@p38, @p39, @p40, @p41, @p42, @p43, @p44, @p45);
+INSERT INTO public."ScenarioSteps" ("Id", "Content", "MaxScore", "Order", "ScenarioId", "ScenarioId1", "StepType", "Title")
+VALUES (@p46, @p47, @p48, @p49, @p50, @p51, @p52, @p53);
+INSERT INTO public."ScenarioSteps" ("Id", "Content", "MaxScore", "Order", "ScenarioId", "ScenarioId1", "StepType", "Title")
+VALUES (@p54, @p55, @p56, @p57, @p58, @p59, @p60, @p61);
+INSERT INTO public."ScenarioSteps" ("Id", "Content", "MaxScore", "Order", "ScenarioId", "ScenarioId1", "StepType", "Title")
+VALUES (@p62, @p63, @p64, @p65, @p66, @p67, @p68, @p69);
+INSERT INTO public."ScenarioSteps" ("Id", "Content", "MaxScore", "Order", "ScenarioId", "ScenarioId1", "StepType", "Title")
+VALUES (@p70, @p71, @p72, @p73, @p74, @p75, @p76, @p77);
+INSERT INTO public."ScenarioSteps" ("Id", "Content", "MaxScore", "Order", "ScenarioId", "ScenarioId1", "StepType", "Title")
+VALUES (@p78, @p79, @p80, @p81, @p82, @p83, @p84, @p85);
+2025-10-18 00:55:16.658 +08:00 [INF] Now listening on: http://localhost:5000
+2025-10-18 00:55:16.686 +08:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-10-18 00:55:16.696 +08:00 [INF] Hosting environment: Production
+2025-10-18 00:55:16.701 +08:00 [INF] Content root path: E:\UniProject\enx-questor-edu\EnxQuestor\Web
+2025-10-18 00:55:32.059 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/ - null null
+2025-10-18 00:55:33.437 +08:00 [INF] Executing endpoint '/Index'
+2025-10-18 00:55:33.772 +08:00 [INF] Route matched with {page = "/Index"}. Executing page /Index
+2025-10-18 00:55:33.930 +08:00 [INF] Executing handler method IndexModel.OnGet - ModelState is "Valid"
+2025-10-18 00:55:34.251 +08:00 [INF] Executed DbCommand (16ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT s."Id", s."AuthorId", s."CreatedAt", s."Description", s."Difficulty", s."IsPublished", s."Slug", s."Tags", s."Title", s."UpdatedAt"
+FROM public."Scenarios" AS s
+WHERE s."IsPublished"
+ORDER BY s."CreatedAt" DESC
+2025-10-18 00:55:34.386 +08:00 [INF] Executed handler method OnGet, returned result .
+2025-10-18 00:55:34.496 +08:00 [INF] Executing an implicit handler method - ModelState is "Valid"
+2025-10-18 00:55:34.525 +08:00 [INF] Executed an implicit handler method, returned result Microsoft.AspNetCore.Mvc.RazorPages.PageResult.
+2025-10-18 00:55:34.711 +08:00 [INF] Executed page /Index in 823.6193ms
+2025-10-18 00:55:34.775 +08:00 [INF] Executed endpoint '/Index'
+2025-10-18 00:55:34.894 +08:00 [INF] HTTP GET / responded 200 in 1813.3328 ms
+2025-10-18 00:55:35.103 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/ - 200 null text/html; charset=utf-8 3049.4636ms
+2025-10-18 00:55:35.400 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/favicon.ico - null null
+2025-10-18 00:55:35.549 +08:00 [INF] HTTP GET /favicon.ico responded 404 in 48.9864 ms
+2025-10-18 00:55:35.677 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/favicon.ico - 404 0 null 277.892ms
+2025-10-18 00:55:35.850 +08:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/favicon.ico, Response status code: 404
+2025-10-18 00:55:49.342 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Scenarios/git-quiz - null null
+2025-10-18 00:55:49.411 +08:00 [INF] HTTP GET /Scenarios/git-quiz responded 404 in 12.4290 ms
+2025-10-18 00:55:49.459 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Scenarios/git-quiz - 404 0 null 116.7267ms
+2025-10-18 00:55:49.919 +08:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/Scenarios/git-quiz, Response status code: 404
+2025-10-18 00:56:00.134 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Scenarios/git-quiz - null null
+2025-10-18 00:56:00.415 +08:00 [INF] HTTP GET /Scenarios/git-quiz responded 404 in 0.3598 ms
+2025-10-18 00:56:00.466 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Scenarios/git-quiz - 404 0 null 332.8371ms
+2025-10-18 00:56:00.934 +08:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/Scenarios/git-quiz, Response status code: 404
+2025-10-18 00:56:14.963 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Scenarios/solid-intro - null null
+2025-10-18 00:56:15.001 +08:00 [INF] HTTP GET /Scenarios/solid-intro responded 404 in 0.2187 ms
+2025-10-18 00:56:15.017 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Scenarios/solid-intro - 404 0 null 53.3838ms
+2025-10-18 00:56:15.122 +08:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/Scenarios/solid-intro, Response status code: 404
+2025-10-18 01:02:29.079 +08:00 [INF] Request starting HTTP/1.1 GET http://localhost:5000/Scenarios/solid-intro - null null
+2025-10-18 01:02:29.142 +08:00 [INF] HTTP GET /Scenarios/solid-intro responded 404 in 0.5220 ms
+2025-10-18 01:02:29.156 +08:00 [INF] Request finished HTTP/1.1 GET http://localhost:5000/Scenarios/solid-intro - 404 0 null 77.0644ms
+2025-10-18 01:02:29.237 +08:00 [INF] Request reached the end of the middleware pipeline without being handled by application code. Request path: GET http://localhost:5000/Scenarios/solid-intro, Response status code: 404
+2025-10-18 01:03:00.365 +08:00 [INF] Application is shutting down...

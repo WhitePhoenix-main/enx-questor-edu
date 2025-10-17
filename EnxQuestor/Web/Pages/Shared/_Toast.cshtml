@@ -1,0 +1,13 @@
+
+<div id="toast" class="fixed bottom-4 right-4 hidden rounded bg-emerald-600 text-white px-4 py-3 shadow-lg">
+    <span id="toast-text">Достижение получено!</span>
+</div>
+<script>
+window.showToast = function (text) {
+  const t = document.getElementById('toast');
+  const s = document.getElementById('toast-text');
+  s.textContent = text || s.textContent;
+  t.classList.remove('hidden');
+  setTimeout(() => t.classList.add('hidden'), 3500);
+}
+</script>

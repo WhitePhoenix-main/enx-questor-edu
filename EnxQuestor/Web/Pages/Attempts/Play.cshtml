@@ -1,0 +1,78 @@
+
+@page "{id:guid}"
+@model PlayModel
+@{
+    ViewData["Title"] = "Прохождение";
+}
+<h1 class="text-xl font-bold mb-4">Прохождение</h1>
+<form method="post">
+<input type="hidden" name="id" value="@Model.Attempt.Id" />
+@foreach (var s in Model.Steps)
+{
+  <div class="rounded border bg-white p-4 mb-4">
+    <div class="font-semibold mb-2">@s.Title (@s.StepType)</div>
+    @if (s.StepType.ToString()=="Text")
+    {
+      <div class="prose">@s.Content</div>
+    }
+    else if (s.StepType.ToString()=="Single")
+    {
+      <input type="hidden" name="stepId" value="@s.Id" />
+      <input type="hidden" name="answerJson" id="ans-@s.Id" />
+      <div id="opts-@s.Id"></div>
+      <script>
+      (function(){
+        var c = JSON.parse('@Html.Raw(s.Content.Replace("'", "\'"))');
+        var root = document.getElementById('opts-@s.Id');
+        c.options.forEach(o=>{
+          var r = document.createElement('input'); r.type='radio'; r.name='choice-@s.Id'; r.value=o;
+          var l = document.createElement('label'); l.textContent=o; l.className='ml-2 mr-4';
+          var wrap = document.createElement('div'); wrap.appendChild(r); wrap.appendChild(l); root.appendChild(wrap);
+        });
+        root.closest('form').addEventListener('submit', function(){
+          var sel = root.querySelector('input[type=radio]:checked');
+          document.getElementById('ans-@s.Id').value = JSON.stringify({choice: sel? sel.value : null});
+        });
+      })();
+      </script>
+    }
+    else if (s.StepType.ToString()=="ShortAnswer")
+    {
+      <input type="hidden" name="stepId" value="@s.Id" />
+      <textarea class="w-full border rounded p-2" name="answerJson" placeholder="Краткий ответ..."></textarea>
+      <script>
+        (function(){
+          var form = document.currentScript.closest('form');
+          form.addEventListener('submit', (e)=>{
+            var ta = form.querySelector('textarea[name=answerJson]');
+            ta.value = JSON.stringify({ text: ta.value });
+          });
+        })();
+      </script>
+    }
+  </div>
+}
+<button formaction="?handler=Answer" class="btn mr-2">Сохранить ответ</button>
+<button formaction="?handler=Finish" class="btn bg-emerald-600 text-white">Завершить</button>
+</form>
+
+@using System.Text.Json
+@{
+  var toast = TempData["Toast"] as string;
+}
+@if (!string.IsNullOrEmpty(toast))
+{
+  <script>
+        (function () {
+            // безопасно проложим строку в JS
+            var msg = @Html.Raw(JsonSerializer.Serialize(toast));
+            if (typeof window.showToast === 'function') {
+                requestAnimationFrame(function(){ showToast(msg); });
+            } else {
+                console && console.warn && console.warn('showToast() is not defined'); 
+                // Фолбэк, чтобы не молчать:
+                // alert(msg);
+            }
+        })();
+    </script>
+}

@@ -1,0 +1,14 @@
+
+@page
+@model IndexModel
+<h1 class="text-2xl font-bold mb-4">Сценарии</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+@foreach (var s in Model.Scenarios)
+{
+  <div class="rounded border bg-white p-4">
+    <h2 class="font-semibold text-lg"><a href="/Scenarios/@s.Slug">@s.Title</a></h2>
+    <p class="text-slate-600">@s.Description</p>
+    <div class="text-sm text-slate-500 mt-2">Теги: @s.Tags • Сложность: @s.Difficulty</div>
+  </div>
+}
+</div>

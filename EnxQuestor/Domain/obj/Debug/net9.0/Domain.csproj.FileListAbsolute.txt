@@ -1,0 +1,11 @@
+E:\UniProject\enx-questor-edu\EnxQuestor\Domain\bin\Debug\net9.0\Domain.deps.json
+E:\UniProject\enx-questor-edu\EnxQuestor\Domain\bin\Debug\net9.0\Domain.dll
+E:\UniProject\enx-questor-edu\EnxQuestor\Domain\bin\Debug\net9.0\Domain.pdb
+E:\UniProject\enx-questor-edu\EnxQuestor\Domain\obj\Debug\net9.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\UniProject\enx-questor-edu\EnxQuestor\Domain\obj\Debug\net9.0\Domain.AssemblyInfoInputs.cache
+E:\UniProject\enx-questor-edu\EnxQuestor\Domain\obj\Debug\net9.0\Domain.AssemblyInfo.cs
+E:\UniProject\enx-questor-edu\EnxQuestor\Domain\obj\Debug\net9.0\Domain.csproj.CoreCompileInputs.cache
+E:\UniProject\enx-questor-edu\EnxQuestor\Domain\obj\Debug\net9.0\Domain.dll
+E:\UniProject\enx-questor-edu\EnxQuestor\Domain\obj\Debug\net9.0\refint\Domain.dll
+E:\UniProject\enx-questor-edu\EnxQuestor\Domain\obj\Debug\net9.0\Domain.pdb
+E:\UniProject\enx-questor-edu\EnxQuestor\Domain\obj\Debug\net9.0\ref\Domain.dll
