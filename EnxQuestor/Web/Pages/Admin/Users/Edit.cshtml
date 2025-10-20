@@ -1,0 +1,23 @@
+@page "{id}"
+@attribute [Authorize(Roles="Admin")]
+@using Microsoft.AspNetCore.Authorization
+@model Web.Pages.Admin.Users.EditModel
+@{
+    ViewData["Title"] = "Роли пользователя";
+}
+<h1>Роли пользователя</h1>
+<h5>@Model.UserEmail</h5>
+
+<form method="post">
+    <div class="mb-3">
+@for (var i = 0; i < Model.AllRoles.Count; i++)
+{
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="SelectedRoles" value="@Model.AllRoles[i]" @(Model.SelectedRoles.Contains(Model.AllRoles[i]) ? "checked" : "") />
+        <label class="form-check-label">@Model.AllRoles[i]</label>
+    </div>
+}
+    </div>
+    <button type="submit" class="btn btn-primary">Сохранить</button>
+    <a asp-page="Index" class="btn btn-link">Назад</a>
+</form>

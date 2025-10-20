@@ -3,11 +3,11 @@ using Domain.Achievements;
 using Domain.Attempts;
 using Domain.Scenarios;
 using Domain.Telegram;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Infrastructure.Identity;
+using Microsoft.EntityFrameworkCore;
+
 namespace Infrastructure.Persistence;
-public sealed class AppDbContext : IdentityDbContext<AppUser>
+public sealed class AppDbContext : DbContext
 {
     public DbSet<Scenario> Scenarios => Set<Scenario>();
     public DbSet<ScenarioStep> ScenarioSteps => Set<ScenarioStep>();

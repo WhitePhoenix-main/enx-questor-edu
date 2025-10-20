@@ -1,0 +1,23 @@
+@page
+@attribute [Authorize(Roles="Admin")]
+@using Microsoft.AspNetCore.Authorization
+@model Web.Pages.Admin.Roles.IndexModel
+@{
+    ViewData["Title"] = "Роли";
+}
+<h1>Роли</h1>
+<p><a asp-page="Create" class="btn btn-primary">Создать роль</a></p>
+<table class="table">
+    <thead><tr><th>Имя</th><th></th></tr></thead>
+    <tbody>
+@foreach (var r in Model.Roles)
+{
+    <tr>
+        <td>@r.Name</td>
+        <td class="text-end">
+            <a asp-page="Delete" asp-route-id="@r.Id" class="btn btn-danger btn-sm">Удалить</a>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

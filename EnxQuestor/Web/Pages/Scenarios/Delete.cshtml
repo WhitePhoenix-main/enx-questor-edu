@@ -1,0 +1,21 @@
+@page "{id:guid}"
+@attribute [Authorize(Policy = Web.Authorization.CrudPolicies.Delete)]
+@using Microsoft.AspNetCore.Authorization
+@model Web.Pages.Scenarios.DeleteModel
+@{
+    ViewData["Title"] = "Удалить сценарий";
+}
+<h1>Удалить сценарий</h1>
+
+@if (Model.Title is null)
+{
+    <div class="text-danger">Сценарий не найден.</div>
+}
+else
+{
+    <p>Удалить сценарий <b>@Model.Title</b>?</p>
+    <form method="post">
+        <button class="btn btn-danger" type="submit">Удалить</button>
+        <a asp-page="Index" class="btn btn-link">Отмена</a>
+    </form>
+}

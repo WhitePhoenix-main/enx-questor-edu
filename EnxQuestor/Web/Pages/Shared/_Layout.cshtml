@@ -1,22 +1,40 @@
-
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<Infrastructure.Identity.AppUser> SignInManager
-@inject UserManager<Infrastructure.Identity.AppUser> UserManager
+@using Web.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
 <!DOCTYPE html>
-<html lang="ru"><head>
-<meta charset="utf-8" /><title>EduPlay</title><meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="~/css/site.css" />
-</head><body class="min-h-screen bg-slate-100">
-<header class="bg-white shadow"><div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
-<a class="font-bold" href="/">EduPlay</a>
-<nav class="flex gap-4">
-  <a href="/Me/Achievements">Достижения</a>
-  <a href="/Admin" class="text-rose-600">Админ</a>
-  @if (SignInManager.IsSignedIn(User))
-  { <form method="post" asp-page="/Auth/Logout"><button class="btn">Выйти</button></form> }
-  else { <a href="/Auth/Login">Войти</a> <a href="/Auth/Register" class="btn">Регистрация</a> }
-</nav>
-</div></header>
-<main class="mx-auto max-w-6xl px-4 py-6">@RenderBody()</main>
-<partial name="_Toast" /> @RenderSection("Scripts", false)
-</body></html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <title>@(ViewData["Title"] ?? "EduPlay") - EduPlay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body class="min-h-screen bg-slate-100">
+<header class="bg-white shadow">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+        <a class="font-bold" asp-page="/Index">EduPlay</a>
+
+        <nav class="flex items-center gap-4">
+            <a asp-page="/Scenarios/Index">Сценарии</a>
+            <a asp-page="/Me/Achievements">Достижения</a>
+
+            @* Админ-панель видна только роли Admin *@
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="text-rose-600" asp-page="/Admin/Users/Index">Админ</a>
+            }
+
+            @await Html.PartialAsync("_LoginPartial")
+        </nav>
+    </div>
+</header>
+
+<main class="mx-auto max-w-6xl px-4 py-6">
+    @RenderBody()
+</main>
+
+<partial name="_Toast" />
+@RenderSection("Scripts", required: false)
+</body>
+</html>

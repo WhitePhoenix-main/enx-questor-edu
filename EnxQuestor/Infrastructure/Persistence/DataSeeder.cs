@@ -4,8 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Domain.Achievements;
 using Domain.Scenarios;
-using Infrastructure.Identity;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,41 +11,21 @@ namespace Infrastructure.Persistence;
 
 public static class DataSeeder
 {
-    public static async Task SeedAsync(IServiceProvider sp, CancellationToken ct = default)
+    /// <summary>
+    /// Сидит доменные данные. Identity-юзеров/ролей НЕ трогаем.
+    /// teacherId — Id пользователя-преподавателя, которому будут принадлежать сценарии.
+    /// </summary>
+    public static async Task SeedAsync(IServiceProvider sp, string teacherId, CancellationToken ct = default)
     {
         using var scope = sp.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
         await db.Database.MigrateAsync(ct);
 
-        var roleMgr = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-
-        foreach (var r in new[] { "Admin", "Teacher", "Student" })
-            if (!await roleMgr.RoleExistsAsync(r))
-                await roleMgr.CreateAsync(new IdentityRole(r));
-
-        async Task<AppUser> EnsureUser(string email, string role, string display)
-        {
-            var u = await userMgr.FindByEmailAsync(email);
-            if (u is null)
-            {
-                u = new AppUser { UserName = email, Email = email, EmailConfirmed = true, DisplayName = display };
-                await userMgr.CreateAsync(u, "Passw0rd!");
-            }
-            if (!await userMgr.IsInRoleAsync(u, role))
-                await userMgr.AddToRoleAsync(u, role);
-            return u;
-        }
-
-        _ = await EnsureUser("admin@local",   "Admin",   "Админ");
-        var teacher = await EnsureUser("teacher@local", "Teacher", "Преподаватель");
-        _ = await EnsureUser("student@local", "Student", "Студент");
-
         if (!await db.Scenarios.AnyAsync(ct))
         {
             var sc1 = Scenario.Create(
-                "Введение в SOLID", "solid-intro", teacher.Id, 1,
+                "Введение в SOLID", "solid-intro", teacherId, 1,
                 "Теория + проверка ключевых принципов.", "oop,solid");
 
             var sc1_s1 = JsonSerializer.Serialize(new { md = "## Принципы SOLID" });
@@ -79,7 +57,7 @@ public static class DataSeeder
             sc1.Publish(true);
 
             var sc2 = Scenario.Create(
-                "Тест по Git", "git-quiz", teacher.Id, 1,
+                "Тест по Git", "git-quiz", teacherId, 1,
                 "Быстрый квиз по Git.", "git");
 
             var sc2_s1 = JsonSerializer.Serialize(new

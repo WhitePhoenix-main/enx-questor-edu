@@ -1,0 +1,13 @@
+@page "{id}"
+@attribute [Authorize(Roles="Admin")]
+@using Microsoft.AspNetCore.Authorization
+@model Web.Pages.Admin.Roles.DeleteModel
+@{
+    ViewData["Title"] = "Удалить роль";
+}
+<h1>Удалить роль</h1>
+<p>Удалить роль <b>@Model.Role?.Name</b>?</p>
+<form method="post">
+    <button class="btn btn-danger" type="submit">Удалить</button>
+    <a asp-page="Index" class="btn btn-link">Отмена</a>
+</form>

@@ -1,0 +1,17 @@
+@page
+@attribute [Authorize(Roles="Admin")]
+@using Microsoft.AspNetCore.Authorization
+@model Web.Pages.Admin.Roles.CreateModel
+@{
+    ViewData["Title"] = "Создать роль";
+}
+<h1>Создать роль</h1>
+<form method="post">
+    <div class="mb-3">
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <button class="btn btn-success" type="submit">Сохранить</button>
+    <a asp-page="Index" class="btn btn-link">Отмена</a>
+</form>

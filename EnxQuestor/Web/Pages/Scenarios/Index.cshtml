@@ -1,0 +1,56 @@
+@page
+@model Web.Pages.Scenarios.IndexModel
+@{
+    ViewData["Title"] = "Сценарии";
+}
+
+<h1 class="mb-3">Сценарии</h1>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <form method="get" class="d-flex gap-2">
+        <input type="text" name="q" value="@Model.Q" class="form-control" placeholder="Поиск по названию или тегам" />
+        <button class="btn btn-outline-secondary" type="submit">Найти</button>
+    </form>
+
+    @if (Model.CanCreate)
+    {
+        <a asp-page="Create" class="btn btn-primary">Создать</a>
+    }
+</div>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Название</th>
+            <th>Slug</th>
+            <th>Опубликован</th>
+            <th>Сложность</th>
+            <th class="text-end">Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var i in Model.Items)
+{
+    <tr>
+        <td>
+            <a asp-page="Details" asp-route-slug="@i.Slug">@i.Title</a>
+        </td>
+        <td>@i.Slug</td>
+        <td>@(i.IsPublished ? "Да" : "Нет")</td>
+        <td>@i.Difficulty</td>
+        <td class="text-end">
+            <div class="btn-group btn-group-sm">
+                @if (Model.CanUpdate)
+                {
+                    <a class="btn btn-outline-primary" asp-page="Edit" asp-route-id="@i.Id">Изменить</a>
+                }
+                @if (Model.CanDelete)
+                {
+                    <a class="btn btn-outline-danger" asp-page="Delete" asp-route-id="@i.Id">Удалить</a>
+                }
+            </div>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

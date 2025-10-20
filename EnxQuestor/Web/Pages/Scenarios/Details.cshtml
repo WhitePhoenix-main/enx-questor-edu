@@ -1,0 +1,58 @@
+@page "/Scenarios/{slug}"
+@model Web.Pages.Scenarios.DetailsModel
+@{
+    ViewData["Title"] = Model.Scenario?.Title ?? "Сценарий";
+}
+
+@if (Model.Scenario is null)
+{
+    <div class="text-red-700">Сценарий не найден.</div>
+}
+else
+{
+    <article class="prose max-w-none">
+        <h1 class="mb-2">@Model.Scenario.Title</h1>
+        <p class="text-slate-600">@Model.Scenario.Description</p>
+        <div class="text-sm text-slate-500 mt-2">
+            Теги: @Model.Scenario.Tags • Сложность: @Model.Scenario.Difficulty
+        </div>
+    </article>
+
+    <div class="mt-6 flex gap-3">
+        <form method="post">
+            <button class="px-4 py-2 rounded bg-blue-600 text-white" formaction="?handler=Start">Начать прохождение</button>
+        </form>
+        <a class="px-4 py-2 rounded border" href="/">Назад к списку</a>
+    </div>
+
+    <div id="err" class="text-red-700 mt-3" hidden></div>
+}
+
+@section Scripts {
+<script>
+// Fallback client-side start in case server handler isn't available.
+// Attempts to call the REST API and redirect to the Play page.
+async function startViaApi(scenarioId) {
+  try {
+    const r = await fetch('/api/attempts/start', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ scenarioId })
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    if (data && data.id) {
+      window.location.href = `/Attempts/Play/${data.id}`;
+    } else if (data && data.attemptId) {
+      window.location.href = `/Attempts/Play/${data.attemptId}`;
+    } else {
+      throw new Error('Не удалось получить идентификатор попытки.');
+    }
+  } catch (e) {
+    const el = document.getElementById('err');
+    el.textContent = 'Ошибка запуска попытки: ' + e.message;
+    el.hidden = false;
+  }
+}
+</script>
+}
