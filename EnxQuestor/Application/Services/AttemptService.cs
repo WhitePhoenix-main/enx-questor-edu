@@ -25,13 +25,31 @@ public sealed class AttemptService : IAttemptService
 
     public async Task<StartAttemptResponse> StartAsync(string userId, StartAttemptRequest req, CancellationToken ct)
     {
-        if (req.ScenarioId == Guid.Empty) throw new ArgumentException("ScenarioId is required");
-        var scenario = await _db.Set<Scenario>().Include(s => s.Steps)
-                           .FirstOrDefaultAsync(s => s.Id == req.ScenarioId && s.IsPublished, ct)
-                       ?? throw new InvalidOperationException("Сценарий не найден или не опубликован.");
-        var attempt = Attempt.Start(scenario.Id, userId, scenario.Steps.Select(s => s.Id));
+        // 1) Идемпотентность: если уже есть активная попытка — вернём её
+        var existing = await _db.Set<Attempt>()
+            .Where(a => a.UserId == userId && a.ScenarioId == req.ScenarioId && a.Status == AttemptStatus.InProgress)
+            .Select(a => a.Id)
+            .FirstOrDefaultAsync(ct);
+
+        if (existing != Guid.Empty)
+            return new StartAttemptResponse(existing);
+
+        // 2) Шаги сценария в порядке
+        var stepIds = await _db.Set<ScenarioStep>()
+            .Where(s => s.ScenarioId == req.ScenarioId)
+            .OrderBy(s => s.Order)
+            .Select(s => s.Id)
+            .ToListAsync(ct);
+
+        if (stepIds.Count == 0)
+            throw new InvalidOperationException("У сценария нет шагов.");
+
+        // 3) Доменная фабрика
+        var attempt = Attempt.Start(req.ScenarioId, userId, stepIds);
+
         _db.Add(attempt);
         await _db.SaveChangesAsync(ct);
+
         return new StartAttemptResponse(attempt.Id);
     }
 

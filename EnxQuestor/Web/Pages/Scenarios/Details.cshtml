@@ -18,11 +18,24 @@ else
         </div>
     </article>
 
-    <div class="mt-6 flex gap-3">
-        <form method="post">
-            <button class="px-4 py-2 rounded bg-blue-600 text-white" formaction="?handler=Start">Начать прохождение</button>
+    <div class="mt-6 flex gap-3 items-center">
+        @* Основной путь: серверный POST-хендлер *@
+        <form method="post" asp-page-handler="Start" class="inline">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="slug" value="@Model.Scenario.Slug" />
+            <button class="px-4 py-2 rounded bg-blue-600 text-white">
+                Начать прохождение
+            </button>
         </form>
+
         <a class="px-4 py-2 rounded border" href="/">Назад к списку</a>
+
+        @* Опционально: fallback через API (по GUID сценария) *@
+        <button type="button"
+                class="px-3 py-2 rounded border text-slate-700"
+                onclick="startViaApi('@Model.Scenario.Id')">
+            Запустить через API
+        </button>
     </div>
 
     <div id="err" class="text-red-700 mt-3" hidden></div>
@@ -30,8 +43,11 @@ else
 
 @section Scripts {
 <script>
-// Fallback client-side start in case server handler isn't available.
-// Attempts to call the REST API and redirect to the Play page.
+/**
+ * Fallback: старт через REST API, затем редирект на Play.
+ * Если ваш API защищён cookie-аутошификацией, CSRF не требуется;
+ * если включён [ValidateAntiForgeryToken] на API — добавьте заголовок RequestVerificationToken.
+ */
 async function startViaApi(scenarioId) {
   try {
     const r = await fetch('/api/attempts/start', {
@@ -41,13 +57,9 @@ async function startViaApi(scenarioId) {
     });
     if (!r.ok) throw new Error('HTTP ' + r.status);
     const data = await r.json();
-    if (data && data.id) {
-      window.location.href = `/Attempts/Play/${data.id}`;
-    } else if (data && data.attemptId) {
-      window.location.href = `/Attempts/Play/${data.attemptId}`;
-    } else {
-      throw new Error('Не удалось получить идентификатор попытки.');
-    }
+    const id = data?.id ?? data?.attemptId;
+    if (!id) throw new Error('Не удалось получить идентификатор попытки.');
+    window.location.href = `/Attempts/Play/${id}`;
   } catch (e) {
     const el = document.getElementById('err');
     el.textContent = 'Ошибка запуска попытки: ' + e.message;

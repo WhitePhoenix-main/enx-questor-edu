@@ -1,74 +1,72 @@
+using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using Application.Abstractions;
+using Application.DTO;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+// если ApplicationUser в другом неймспейсе — поправь using ниже
+using Web.Identity;
 
 namespace Web.Pages.Scenarios;
 
-[AllowAnonymous]
+[Authorize] // по умолчанию требуем логин
 public sealed class DetailsModel : PageModel
 {
     private readonly AppDbContext _db;
+    private readonly IAttemptService _attempts;
+    private readonly UserManager<ApplicationUser> _userManager;
+
     public Domain.Scenarios.Scenario? Scenario { get; private set; }
 
-    public DetailsModel(AppDbContext db) => _db = db;
+    public DetailsModel(
+        AppDbContext db,
+        IAttemptService attempts,
+        UserManager<ApplicationUser> userManager)
+    {
+        _db = db;
+        _attempts = attempts;
+        _userManager = userManager;
+    }
 
-    public async Task<IActionResult> OnGet(string slug)
+    [AllowAnonymous] // просмотр сценария открыт всем
+    public async Task<IActionResult> OnGet(string slug, CancellationToken ct)
     {
         Scenario = await _db.Scenarios
             .Include(s => s.Steps)
             .Where(s => s.IsPublished && s.Slug == slug)
-            .FirstOrDefaultAsync();
+            .FirstOrDefaultAsync(ct);
 
-        if (Scenario is null) return NotFound();
-        return Page();
+        return Scenario is null ? NotFound() : Page();
     }
 
-    // If IAttemptService is available at runtime, we can start entirely within Razor Pages.
-    public async Task<IActionResult> OnPostStart(string slug, [FromServices] Application.Abstractions.IAttemptService svc)
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> OnPostStart(string slug, CancellationToken ct)
     {
-        var s = await _db.Scenarios.Where(x => x.IsPublished && x.Slug == slug)
-            .Select(x => new { x.Id }).FirstOrDefaultAsync();
+        // 1) получаем GUID пользователя из Identity
+        var userIdStr = _userManager.GetUserId(User);
+        if (string.IsNullOrEmpty(userIdStr)) return Challenge(); // не залогинен
 
-        if (s is null) return NotFound();
+        if (!Guid.TryParse(userIdStr, out _))
+            return Forbid("User Id must be GUID.");
 
-        // We don't know exact DTO names at compile-time here;
-        // below we try two common shapes via dynamic dispatch to be resilient.
-        try
-        {
-            // Try: StartAsync(string userId, StartAttemptRequest req, CancellationToken ct)
-            var uid = User?.Identity?.Name ?? User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            if (uid is null) return Challenge(); // require auth
+        // 2) ищем сценарий по slug
+        var scenarioId = await _db.Scenarios
+            .Where(x => x.IsPublished && x.Slug == slug)
+            .Select(x => x.Id)
+            .FirstOrDefaultAsync(ct);
 
-            var reqType = typeof(Application.DTO.StartAttemptRequest);
-            var req = System.Activator.CreateInstance(reqType, new object?[] { s.Id });
-            var method = svc.GetType().GetMethod("StartAsync");
-            if (method is null) throw new System.MissingMethodException("StartAsync not found on IAttemptService");
+        if (scenarioId == Guid.Empty) return NotFound();
 
-            var task = (System.Threading.Tasks.Task) method.Invoke(svc, new object?[] { uid, req!, HttpContext.RequestAborted })!;
-            await task.ConfigureAwait(false);
+        // 3) стартуем попытку через сервис (внутри он вызовет Attempt.Start)
+        var res = await _attempts.StartAsync(userIdStr, new StartAttemptRequest(scenarioId), ct);
 
-            // Try to get result.Id via reflection if method returns a result with Id
-            var resultProp = task.GetType().GetProperty("Result");
-            var result = resultProp?.GetValue(task);
-            var idProp = result?.GetType().GetProperty("Id") ?? result?.GetType().GetProperty("AttemptId");
-            var attemptId = (System.Guid?) idProp?.GetValue(result);
-
-            if (attemptId is System.Guid gid)
-                return RedirectToPage("/Attempts/Play", new { id = gid });
-
-            // If result shape unknown, fall back to client-side API call
-        }
-        catch
-        {
-            // Fall through to client-side API start
-        }
-
-        // Fallback: render page and let the client-side script call the REST API.
-        TempData["Toast"] = "Не удалось запустить попытку через серверный обработчик — пробуем через API.";
-        return Page();
+        // 4) редирект на прохождение
+        return RedirectToPage("/Attempts/Play", new { id = res.AttemptId});
     }
 }

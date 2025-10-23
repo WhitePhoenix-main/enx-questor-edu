@@ -20,8 +20,6 @@ public static class DataSeeder
         using var scope = sp.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        await db.Database.MigrateAsync(ct);
-
         if (!await db.Scenarios.AnyAsync(ct))
         {
             var sc1 = Scenario.Create(
