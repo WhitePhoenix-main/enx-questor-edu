@@ -1,77 +1,138 @@
-
-@page "{id:guid}"
+@page "/Attempts/Play/{id:guid}/{n:int?}"
 @model PlayModel
-@{
-    ViewData["Title"] = "Прохождение";
-}
-<h1 class="text-xl font-bold mb-4">Прохождение</h1>
-<form method="post">
-<input type="hidden" name="id" value="@Model.Attempt.Id" />
-@foreach (var s in Model.Steps)
-{
-  <div class="rounded border bg-white p-4 mb-4">
-    <div class="font-semibold mb-2">@s.Title (@s.StepType)</div>
-    @if (s.StepType.ToString()=="Text")
-    {
-      <div class="prose">@s.Content</div>
-    }
-    else if (s.StepType.ToString()=="Single")
-    {
-      <input type="hidden" name="stepId" value="@s.Id" />
-      <input type="hidden" name="answerJson" id="ans-@s.Id" />
-      <div id="opts-@s.Id"></div>
-      <script>
-      (function(){
-        var c = JSON.parse('@Html.Raw(s.Content.Replace("'", "\'"))');
-        var root = document.getElementById('opts-@s.Id');
-        c.options.forEach(o=>{
-          var r = document.createElement('input'); r.type='radio'; r.name='choice-@s.Id'; r.value=o;
-          var l = document.createElement('label'); l.textContent=o; l.className='ml-2 mr-4';
-          var wrap = document.createElement('div'); wrap.appendChild(r); wrap.appendChild(l); root.appendChild(wrap);
-        });
-        root.closest('form').addEventListener('submit', function(){
-          var sel = root.querySelector('input[type=radio]:checked');
-          document.getElementById('ans-@s.Id').value = JSON.stringify({choice: sel? sel.value : null});
-        });
-      })();
-      </script>
-    }
-    else if (s.StepType.ToString()=="ShortAnswer")
-    {
-      <input type="hidden" name="stepId" value="@s.Id" />
-      <textarea class="w-full border rounded p-2" name="answerJson" placeholder="Краткий ответ..."></textarea>
-      <script>
-        (function(){
-          var form = document.currentScript.closest('form');
-          form.addEventListener('submit', (e)=>{
-            var ta = form.querySelector('textarea[name=answerJson]');
-            ta.value = JSON.stringify({ text: ta.value });
-          });
-        })();
-      </script>
-    }
-  </div>
-}
-<button formaction="?handler=Answer" class="btn mr-2">Сохранить ответ</button>
-<button formaction="?handler=Finish" class="btn bg-emerald-600 text-white">Завершить</button>
-</form>
-
 @using System.Text.Json
 @{
-  var toast = TempData["Toast"] as string;
+    ViewData["Title"] = "Прохождение";
+    var toast = TempData["Toast"] as string;
 }
+
+<h1 class="text-xl font-bold mb-2">Прохождение</h1>
+<div class="text-sm text-slate-500 mb-4">
+    @(Model.AllStepsAnswered ? "Все шаги пройдены" : $"Шаг {Model.CurrentStepNumber} из {Model.TotalSteps}")
+</div>
+
+@if (Model.AllStepsAnswered)
+{
+    <form method="post" asp-page-handler="Finish" class="mb-6">
+        <input type="hidden" name="id" value="@Model.Attempt.Id" />
+        <button class="btn bg-emerald-600 text-white">Завершить</button>
+    </form>
+}
+else
+{
+    @foreach (var s in Model.Steps)
+    {
+        <div class="rounded border bg-white p-4 mb-4">
+            <div class="font-semibold mb-2">@s.Title (@s.StepType)</div>
+
+            @* ---------- Text ---------- *@
+            @if (s.StepType.ToString() == "Text")
+            {
+                <div class="prose mb-4">@s.Content</div>
+                <form method="post" asp-page-handler="Answer" asp-route-n="@Model.CurrentStepNumber" class="mt-2">
+                    <input type="hidden" name="id" value="@Model.Attempt.Id" />
+                    <!-- отправляем явный «реальный» ответ -->
+                    <input type="hidden" name="answerJson" value='{"next":true}' />
+                    <button type="submit" class="btn">Далее</button>
+                </form>
+            }
+            @* ---------- Single choice ---------- *@
+            else if (s.StepType.ToString() == "Single")
+            {
+                <form method="post" asp-page-handler="Answer" asp-route-n="@Model.CurrentStepNumber" class="step-form mt-3">
+                    <input type="hidden" name="id" value="@Model.Attempt.Id" />
+                    <input type="hidden" name="answerJson" id="ans-@s.Id" />
+
+                    <div id="opts-@s.Id" class="mb-3"></div>
+
+                    <button type="submit" class="btn">Сохранить ответ</button>
+
+                    <script>
+                        (function () {
+                            var root = document.getElementById('opts-@s.Id');
+                            var raw = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(s.Content ?? ""));
+                            var cfg = {};
+                            try {
+                                var trimmed = (raw || "").trim();
+                                if (trimmed.length) cfg = JSON.parse(trimmed);
+                            } catch (e) {
+                                console.warn('Не удалось распарсить JSON шага:', raw, e);
+                                cfg = {};
+                            }
+
+                            var options = cfg.options || cfg.Options || cfg.choices || cfg.Choices || cfg.answers || cfg.Answers || [];
+                            if (!Array.isArray(options) || options.length === 0) {
+                                root.textContent = 'Нет вариантов ответа (проверьте JSON в Content).';
+                                return;
+                            }
+
+                            options.forEach(function (o, i) {
+                                var id = 'choice-@s.Id-' + i;
+                                var text = (typeof o === 'string') ? o : (o.text || o.label || o.title || JSON.stringify(o));
+                                var val  = (typeof o === 'string') ? o : (o.value ?? text);
+
+                                var r = document.createElement('input');
+                                r.type = 'radio';
+                                r.name = 'choice-@s.Id';
+                                r.value = String(val);
+                                r.id = id;
+
+                                var l = document.createElement('label');
+                                l.setAttribute('for', id);
+                                l.textContent = String(text);
+                                l.className = 'ml-2 mr-4';
+
+                                var wrap = document.createElement('div');
+                                wrap.className = 'mb-1 flex items-center';
+                                wrap.appendChild(r);
+                                wrap.appendChild(l);
+                                root.appendChild(wrap);
+                            });
+
+                            var form = root.closest('form');
+                            form.addEventListener('submit', function () {
+                                var sel = root.querySelector('input[type=radio]:checked');
+                                document.getElementById('ans-@s.Id').value = JSON.stringify({ choice: sel ? sel.value : null });
+                            });
+                        })();
+                    </script>
+                </form>
+            }
+            @* ---------- ShortAnswer ---------- *@
+            else if (s.StepType.ToString() == "ShortAnswer")
+            {
+                <form method="post" asp-page-handler="Answer" asp-route-n="@Model.CurrentStepNumber" class="step-form mt-3">
+                    <input type="hidden" name="id" value="@Model.Attempt.Id" />
+                    <input type="hidden" name="answerJson" id="ans-@s.Id" />
+
+                    <textarea class="w-full border rounded p-2 mb-3" id="ta-@s.Id" placeholder="Краткий ответ..."></textarea>
+
+                    <button type="submit" class="btn">Сохранить ответ</button>
+
+                    <script>
+                        (function () {
+                            var form = document.currentScript.closest('form');
+                            form.addEventListener('submit', function () {
+                                var ta = form.querySelector('#ta-@s.Id');
+                                document.getElementById('ans-@s.Id').value = JSON.stringify({ text: ta.value || null });
+                            });
+                        })();
+                    </script>
+                </form>
+            }
+        </div>
+    }
+}
+
 @if (!string.IsNullOrEmpty(toast))
 {
-  <script>
+    <script>
         (function () {
-            // безопасно проложим строку в JS
             var msg = @Html.Raw(JsonSerializer.Serialize(toast));
             if (typeof window.showToast === 'function') {
-                requestAnimationFrame(function(){ showToast(msg); });
+                requestAnimationFrame(function () { showToast(msg); });
             } else {
-                console && console.warn && console.warn('showToast() is not defined'); 
-                // Фолбэк, чтобы не молчать:
-                // alert(msg);
+                console && console.warn && console.warn('showToast() is not defined');
             }
         })();
     </script>
