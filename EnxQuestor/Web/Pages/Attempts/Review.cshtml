@@ -1,0 +1,119 @@
+﻿@page "/Attempts/Review/{id:guid}"
+@model Web.Pages.Attempts.ReviewModel
+@{
+    ViewData["Title"] = "Итоги прохождения";
+    var s = Model.Data;
+}
+
+@if (s is null)
+{
+    <div class="text-red-700">Попытка не найдена или доступ запрещён.</div>
+}
+else
+{
+    <article class="prose max-w-none">
+        <h1 class="mb-2">Итоги: @(string.IsNullOrWhiteSpace(s.ScenarioTitle) ? "Сценарий" : s.ScenarioTitle)</h1>
+        <p class="text-slate-600">
+            Пользователь: @s.UserDisplayName • Дата: @(s.FinishedAtLocal?.ToString("dd.MM.yyyy HH:mm") ?? "—")
+        </p>
+
+        <div class="mt-4 flex items-center gap-2">
+            <span class="px-2 py-1 rounded text-white @(s.Passed ? "bg-emerald-600" : "bg-rose-600")">
+                @(s.Passed ? "Пройдено" : "Не пройдено")
+            </span>
+            @if (s.PassThresholdPercent is not null)
+            {
+                <span class="px-2 py-1 rounded border text-slate-700">
+                    Порог: @s.PassThresholdPercent%
+                </span>
+            }
+        </div>
+    </article>
+
+    <section class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="rounded-xl border p-4">
+            <div class="text-sm text-slate-500 mb-1">Баллы</div>
+            <div class="text-2xl font-semibold">@s.Score / @s.MaxScore</div>
+            <div class="text-slate-600">@((s.Percent ?? 0).ToString("0.#"))%</div>
+        </div>
+
+        <div class="rounded-xl border p-4">
+            <div class="text-sm text-slate-500 mb-1">Длительность</div>
+            <div class="text-2xl font-semibold">@s.DurationHuman</div>
+            <div class="text-slate-600">
+                c @s.StartedAtLocal?.ToString("HH:mm") до @s.FinishedAtLocal?.ToString("HH:mm")
+            </div>
+        </div>
+
+        <div class="rounded-xl border p-4">
+            <div class="text-sm text-slate-500 mb-1">Статистика</div>
+            <div>Шагов: <b>@s.TotalSteps</b></div>
+            <div>Верных: <b>@s.Correct</b></div>
+            <div>Неверных: <b>@s.Incorrect</b></div>
+        </div>
+    </section>
+
+    <section class="mt-8">
+        <h2 class="text-lg font-semibold mb-3">Ответы</h2>
+
+        @if (s.Answers.Count == 0)
+        {
+            <div class="text-slate-600">Нет данных по ответам.</div>
+        }
+        else
+        {
+            <ol class="space-y-4">
+                @foreach (var ans in s.Answers)
+                {
+                    <li class="rounded-xl border">
+                        <details>
+                            <summary class="list-none p-4 cursor-pointer flex items-start justify-between gap-4">
+                                <div class="flex-1">
+                                    <div class="text-sm text-slate-500">Шаг @ans.Index</div>
+                                    <div class="font-medium">@(!string.IsNullOrWhiteSpace(ans.StepTitle) ? ans.StepTitle : "—")</div>
+                                </div>
+                                <div class="shrink-0">
+                                    <span class="px-2 py-1 rounded text-white @(ans.IsCorrect == true ? "bg-emerald-600" : (ans.IsCorrect == false ? "bg-rose-600" : "bg-slate-500"))">
+                                        @((ans.IsCorrect == true) ? "Верно" : (ans.IsCorrect == false ? "Неверно" : "—"))
+                                    </span>
+                                </div>
+                            </summary>
+
+                            <div class="px-4 pb-4 space-y-2 text-sm">
+                                <div>
+                                    <div class="text-slate-500">Ответ (сырой JSON)</div>
+                                    <pre class="bg-slate-50 p-3 rounded border whitespace-pre-wrap">@ans.AnswerJson</pre>
+                                </div>
+
+                                <div class="flex flex-wrap gap-4">
+                                    <div>Баллы: <b>@ans.Points</b></div>
+                                    @if (ans.TimeSpentSec is not null)
+                                    {
+                                        <div>Время: <b>@ans.TimeSpentSec c</b></div>
+                                    }
+                                    @if (ans.UsedHint == true)
+                                    {
+                                        <div class="text-amber-700">Использована подсказка</div>
+                                    }
+                                </div>
+                            </div>
+                        </details>
+                    </li>
+                }
+            </ol>
+        }
+    </section>
+
+    <div class="mt-8 flex flex-wrap gap-3">
+        @if (!string.IsNullOrWhiteSpace(s.ScenarioSlug))
+        {
+            <a class="px-4 py-2 rounded bg-blue-600 text-white" href="/Scenarios/@s.ScenarioSlug">Пройти сценарий ещё раз</a>
+        }
+        <a class="px-4 py-2 rounded border" href="/Scenarios">К списку сценариев</a>
+        <a class="px-4 py-2 rounded border" href="/Attempts?scenarioId=@s.ScenarioId">Все попытки по сценарию</a>
+        @if (!string.IsNullOrWhiteSpace(s.ShareUrl))
+        {
+            <a class="px-4 py-2 rounded border" href="@s.ShareUrl">Поделиться результатом</a>
+        }
+    </div>
+}
